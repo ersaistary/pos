@@ -7,14 +7,12 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-tittle">Data User</h5>
+                <h5 class="card-tittle mt-3">Data User</h5>
                 <div class="mb-3" align="right">
-                    <div class="btn btn-primary">
-                        <a href="?page=tambah-user">Tambah User</a>
-                    </div>
+                    <a href="?page=tambah-user" class="btn btn-primary mb-3" >Tambah User</a>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" >
                         <thead>
                             <tr>
                                 <th>No</th>
