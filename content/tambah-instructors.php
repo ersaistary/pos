@@ -12,12 +12,12 @@ if (isset($_GET['delete'])) {
 }
 
 if (isset($_POST['name'])) {
-    $name      = $_POST['name'];
-    $gender    = isset($_POST['gender']) ? $_POST['gender'] : 0;
+    $name = $_POST['name'];
+    $gender = isset($_POST['gender']) ? $_POST['gender'] : 0;
     $education = $_POST['education'];
-    $phone     = $_POST['phone'];
-    $email     = $_POST['email'];
-    $address   = $_POST['address'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
 
     $id_instructor = isset($_GET['edit']) ? $_GET['edit'] : '';
     
@@ -58,12 +58,10 @@ if (isset($_GET['edit'])) {
                         <label for="">Gender *</label>
                         <br>
                         <input type="radio" name="gender" value="0" <?= (isset($_GET['edit']) && isset($rowEdit['gender']) && $rowEdit['gender'] == 0) ? 'checked' : '' ?>>
-                        <label for="male">Man</label>
+                        <label for="male">Male</label>
 
                         <input type="radio" name="gender" value="1" <?= (isset($_GET['edit']) && isset($rowEdit['gender']) && $rowEdit['gender'] == 1) ? 'checked' : '' ?>>
-                        <label for="female">Woman</label>
-
-
+                        <label for="female">Female</label>
                     </div>
                     
                     <!-- Education -->

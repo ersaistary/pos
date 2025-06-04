@@ -7,12 +7,12 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-tittle mt-3">Data User</h5>
+                <h5 class="card-tittle mt-3">Data Instructors</h5>
                 <div class="mb-3" align="right">
                     <a href="?page=tambah-instructors" class="btn btn-primary mb-3" >Tambah instructors</a>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered datatable">
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>
@@ -30,14 +30,16 @@
                             <tr>
                                 <td><?= $key + 1 ?></td>
                                 <td><?= $row['name'] ?></td>
-                                <td><?= $row['gender'] == 1 ? 'Woman' : 'Man' ?></td>
+                                <td><?= $row['gender'] == 1 ? 'Female' : 'Male' ?></td>
                                 <td><?= $row['education'] ?></td>
                                 <td><?= $row['phone'] ?></td>
                                 <td><?= $row['email'] ?></td>
                                 <td><?= $row['address'] ?></td>
                                 <td class="text-center">
+                                    <a href="?page=tambah-instructors-majors&id=<?php echo $row['id']?>" class = "btn btn-warning" name="edit">Add Major</a>
                                     <a href="?page=tambah-instructors&edit=<?php echo $row['id']?>" class = "btn btn-primary" name="edit">Edit</a>
                                     <a onclick="return confirm('Are you sure wanna delete this data?')" href="?page=tambah-instructors&delete=<?php echo $row['id']?>" class = "btn btn-danger" name="delete">Delete</a>
+                                    
                                 </td>
                             </tr>
                             <?php endforeach?>

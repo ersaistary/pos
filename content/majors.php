@@ -7,12 +7,12 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-tittle mt-3">Data User</h5>
+                <h5 class="card-tittle mt-3">Data Majors</h5>
                 <div class="mb-3" align="right">
                     <a href="?page=tambah-majors" class="btn btn-primary mb-3" >Tambah majors</a>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered datatable" >
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>

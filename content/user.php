@@ -12,7 +12,7 @@
                     <a href="?page=tambah-user" class="btn btn-primary mb-3" >Tambah User</a>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered" >
+                    <table class="table table-bordered datatable" >
                         <thead>
                             <tr>
                                 <th>No</th>

@@ -36,7 +36,7 @@ if(isset($_GET['edit'])){
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body mt-3">
-                <h5 class="card-tittle">Add Roles</h5>
+                <h5 class="card-title"><?= isset($_GET['edit']) ? 'Edit Role' : 'Add Role' ?></h5>
 
                 <form action="" method="post">
                     <div class="mb-3">
