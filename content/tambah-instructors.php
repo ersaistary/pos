@@ -18,15 +18,15 @@ if (isset($_POST['name'])) {
     $phone = $_POST['phone'];
     $email = $_POST['email'];
     $address = $_POST['address'];
-
+    $password = isset($_POST['password']) ? sha1($_POST['password']) : '';
     $id_instructor = isset($_GET['edit']) ? $_GET['edit'] : '';
     
     if (!isset($_GET['edit'])) {
-        $insert = mysqli_query($config, "INSERT INTO instructors (name, gender, education, phone, email, address) VALUES ('$name', '$gender', '$education', '$phone', '$email', '$address')");
+        $insert = mysqli_query($config, "INSERT INTO instructors (name, gender, education, phone, email, address, password) VALUES ('$name', '$gender', '$education', '$phone', '$email', '$address', '$password')");
         header("location:?page=instructors&tambah=berhasil");
         exit;
     } else {
-        $update = mysqli_query($config, "UPDATE instructors SET name='$name', gender='$gender', education='$education', phone='$phone', email='$email', address='$address' WHERE id = $id_instructor");
+        $update = mysqli_query($config, "UPDATE instructors SET name='$name', gender='$gender', education='$education', phone='$phone', email='$email', address='$address', password='$password' WHERE id = $id_instructor");
         header("location:?page=instructors&ubah=berhasil");
         exit;
     }
@@ -83,6 +83,15 @@ if (isset($_GET['edit'])) {
                         <label for="email">Email *</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="Enter email address" required 
                             value="<?= isset($_GET['edit']) ? htmlspecialchars($rowEdit['email']) : '' ?>">
+                    </div>
+
+                    <!-- Password -->
+                     <div class="mb-3">
+                        <label for="">Password *</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter your password" <?= isset($_GET['edit']) ? '' : 'required' ?>>
+                        <?php if (isset($_GET['edit'])): ?>
+                            <small>*If you want to change your password, fill this field.</small>
+                        <?php endif; ?>
                     </div>
                     
                     <!-- Address -->
