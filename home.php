@@ -2,7 +2,7 @@
   session_start();
   ob_start();
   include 'config/koneksi.php';
-  
+  include 'settingRole.php';
   $_name = isset($_SESSION['NAME'])? $_SESSION['NAME']: '';
   if(!$_name){
     header ("location:index.php?access=failed");

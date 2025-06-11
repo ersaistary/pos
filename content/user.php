@@ -8,8 +8,9 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-tittle mt-3">Data User</h5>
-                <div class="mb-3" align="right">
+                <div class="mb-3 d-flex justify-content-between">
                     <a href="?page=tambah-user" class="btn btn-primary mb-3" >Tambah User</a>
+                    <a href="?page=restore-user" class="btn btn-primary mb-3">Restore User</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered datatable" >

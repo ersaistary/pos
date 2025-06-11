@@ -14,19 +14,20 @@ if (isset($_GET['delete'])) {
 if (isset($_POST['name'])) {
     $name = $_POST['name'];
     $gender = isset($_POST['gender']) ? $_POST['gender'] : 0;
-    $education = $_POST['education'];
+    // $education = $_POST['education'];
     $phone = $_POST['phone'];
     $email = $_POST['email'];
     $address = $_POST['address'];
     $password = isset($_POST['password']) ? sha1($_POST['password']) : '';
+    $id_role = 4;
     $id_instructor = isset($_GET['edit']) ? $_GET['edit'] : '';
     
     if (!isset($_GET['edit'])) {
-        $insert = mysqli_query($config, "INSERT INTO instructors (name, gender, education, phone, email, address, password) VALUES ('$name', '$gender', '$education', '$phone', '$email', '$address', '$password')");
+        $insert = mysqli_query($config, "INSERT INTO instructors (id_role, name, gender, phone, email, address, password) VALUES ('$id_role', '$name', '$gender', '$phone', '$email', '$address', '$password')");
         header("location:?page=instructors&tambah=berhasil");
         exit;
     } else {
-        $update = mysqli_query($config, "UPDATE instructors SET name='$name', gender='$gender', education='$education', phone='$phone', email='$email', address='$address', password='$password' WHERE id = $id_instructor");
+        $update = mysqli_query($config, "UPDATE instructors SET id_role='$id_role', name='$name', gender='$gender', education='$education', phone='$phone', email='$email', address='$address', password='$password' WHERE id = $id_instructor");
         header("location:?page=instructors&ubah=berhasil");
         exit;
     }
@@ -65,11 +66,11 @@ if (isset($_GET['edit'])) {
                     </div>
                     
                     <!-- Education -->
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="education">Education *</label>
                         <input type="text" class="form-control" name="education" id="education" placeholder="Enter education" required
                             value="<?= isset($_GET['edit']) ? htmlspecialchars($rowEdit['education']) : '' ?>">
-                    </div>
+                    </div> -->
                     
                     <!-- Phone -->
                     <div class="mb-3">
