@@ -27,6 +27,7 @@ if(isset($_POST['email'])){
 }
 
 $queryRoles = mysqli_query($config, "SELECT * FROM roles 
+WHERE name IN ('Instructors','Students')
 ORDER BY id DESC");
 $rowRoles   = mysqli_fetch_all($queryRoles, MYSQLI_ASSOC);
 ?>
@@ -122,8 +123,8 @@ $rowRoles   = mysqli_fetch_all($queryRoles, MYSQLI_ASSOC);
                                                 <?php endforeach ?>
                         <!-- <option value="">Pilih Role</option>
                         <option value="1">Instructor</option>
-                        <option value="2">Student</option>
-                        <option value="3">Else</option> -->
+                        <option value="2">Student</option> -->
+                        <option value="0">Else</option>
                       </select>
                       <div class="invalid-feedback">Please select your role!</div>
                     </div>

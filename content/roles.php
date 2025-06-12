@@ -26,6 +26,7 @@
                                 <td><?= $key + 1 ?></td>
                                 <td><?= $row['name'] ?></td>
                                 <td class="text-center">
+                                    <a href="?page=tambah-roles&add-role-menu=<?php echo $row['id']?>" class = "btn btn-success" name="edit">Add Role Menu</a>
                                     <a href="?page=tambah-roles&edit=<?php echo $row['id']?>" class = "btn btn-primary" name="edit">Edit</a>
                                     <a onclick="return confirm('Are you sure wanna delete this data?')" href="?page=tambah-roles&delete=<?php echo $row['id']?>" class = "btn btn-danger" name="delete">Delete</a>
                                 </td>

@@ -1,8 +1,14 @@
 <!-- ======= Sidebar ======= -->
 <?php
+$id_role = isset($_SESSION['ID_ROLE']) ? $_SESSION['ID_ROLE'] : '';
   $queryMainMenu = mysqli_query(
       $config,
-      "SELECT * FROM menus WHERE parent_id = 0 OR parent_id = ''"
+      "SELECT DISTINCT menus.* FROM menus 
+      JOIN menu_roles ON menus.id = menu_roles.id_menus
+      JOIN roles ON roles.id = menu_roles.id_roles
+    --   WHERE menu_roles.id_roles = '$id_role' 
+      AND (parent_id = 0 OR parent_id = '')
+      ORDER BY urutan ASC"
   );
   $rowMainMenu = mysqli_fetch_all($queryMainMenu, MYSQLI_ASSOC);
 ?>  
@@ -23,7 +29,11 @@
             $id_menu = $mainMenu['id'];
             $querySubMenu = mysqli_query(
                 $config,
-                "SELECT * FROM menus WHERE parent_id ='$id_menu' ORDER BY urutan ASC"
+                "SELECT DISTINCT menus.* FROM menus 
+                JOIN menu_roles ON menus.id = menu_roles.id_menus
+                JOIN roles ON roles.id = menu_roles.id_roles
+                WHERE menu_roles.id_roles = '$id_role' AND 
+                (parent_id ='$id_menu') ORDER BY urutan ASC"
             );
             ?>
             <?php if (mysqli_num_rows($querySubMenu) > 0): ?>
