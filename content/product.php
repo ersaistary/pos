@@ -12,7 +12,7 @@
             <div class="card-body">
                 <h5 class="card-tittle mt-3">Data Product</h5>
                 <div class="mb-3" align="right">
-                    <a href="?page=tambah-products" class="btn btn-primary mb-3" >Tambah Product</a>
+                    <a href="?page=tambah-product" class="btn btn-primary mb-3" >Tambah Product</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered datatable">
@@ -37,9 +37,9 @@
                                 <td><?= $row['qty'] ?></td>
                                 <td><?= $row['description'] ?></td>
                                 <td class="text-center">
-                                    <a href="?page=tambah-products-majors&id=<?php echo $row['id']?>" class = "btn btn-warning" name="edit">Add Major</a>
-                                    <a href="?page=tambah-products&edit=<?php echo $row['id']?>" class = "btn btn-primary" name="edit">Edit</a>
-                                    <a onclick="return confirm('Are you sure wanna delete this data?')" href="?page=tambah-products&delete=<?php echo $row['id']?>" class = "btn btn-danger" name="delete">Delete</a>
+                                    <a href="?page=tambah-product-majors&id=<?php echo $row['id']?>" class = "btn btn-warning" name="edit">Add Major</a>
+                                    <a href="?page=tambah-product&edit=<?php echo $row['id']?>" class = "btn btn-primary" name="edit">Edit</a>
+                                    <a onclick="return confirm('Are you sure wanna delete this data?')" href="?page=tambah-product&delete=<?php echo $row['id']?>" class = "btn btn-danger" name="delete">Delete</a>
                                     
                                 </td>
                             </tr>

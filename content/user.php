@@ -1,5 +1,5 @@
 <?php 
-    $queryUser = mysqli_query($config, "SELECT * FROM users WHERE deleted_at = 0");
+    $queryUser = mysqli_query($config, "SELECT * FROM users");
     $rowUser = mysqli_fetch_all($queryUser, MYSQLI_ASSOC);
 ?>
 
@@ -8,9 +8,8 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-tittle mt-3">Data User</h5>
-                <div class="mb-3 d-flex justify-content-between">
+                <div class="mb-3" align="right">
                     <a href="?page=tambah-user" class="btn btn-primary mb-3" >Tambah User</a>
-                    <a href="?page=restore-user" class="btn btn-primary mb-3">Restore User</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered datatable" >
@@ -29,6 +28,7 @@
                                 <td><?= $row['name'] ?></td>
                                 <td><?= $row['email'] ?></td>
                                 <td>
+                                    <a href="?page=tambah-user&add-user-role=<?php echo $row['id']?>" class = "btn btn-success" name="edit">Add User Role</a>
                                     <a href="?page=tambah-user&edit=<?php echo $row['id']?>" class = "btn btn-primary" name="edit">Edit</a>
                                     <a onclick="return confirm('Are you sure wanna delete this data?')" href="?page=tambah-user&delete=<?php echo $row['id']?>" class = "btn btn-danger" name="delete">Delete</a>
                                 </td>
