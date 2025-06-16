@@ -1,7 +1,7 @@
 <?php 
 if(isset($_GET['delete'])){
     $id_roles = isset($_GET['delete'])? $_GET['delete'] : '';
-    $queryDelete = mysqli_query($config, "UPDATE roles SET deleted_at = 1 WHERE id = $id_roles");
+    $queryDelete = mysqli_query($config, "DELETE FROM roles WHERE id = $id_roles");
     if($queryDelete){
         header("location:?page=roles&hapus=berhasil");
     }else{
@@ -109,7 +109,7 @@ if(isset($_POST['save'])){
                                 <input type="text" class="form-control" name="name" placeholder="Enter Role" required value="<?= isset($_GET['edit'])? $rowEdit['name'] : '' ?>">
                             </div>
                             <div class="mb-3">
-                                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-sm btn-primary" name="simpan">Submit</button>
                             </div>
                         </form>
                 <?php endif ?>

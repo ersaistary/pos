@@ -1,5 +1,5 @@
 <?php 
-    $queryRoles = mysqli_query($config, "SELECT * FROM roles WHERE deleted_at = 0");
+    $queryRoles = mysqli_query($config, "SELECT * FROM roles");
     $rowUser = mysqli_fetch_all($queryRoles, MYSQLI_ASSOC);
 ?>
 
