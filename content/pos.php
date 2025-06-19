@@ -7,6 +7,12 @@ $rowQuery = mysqli_fetch_all($query, MYSQLI_ASSOC);
 if(isset($_POST['add_transaction'])){
     header("location:?page=tambah-pos");
 }
+
+if(isset($_GET['delete'])){
+    $id = $_GET['delete'];
+    mysqli_query($config, "DELETE FROM transactions WHERE id = '$id'");
+    header("location:?page=pos&delete=success");
+}
 ?>
 
 <div class="row">
@@ -24,7 +30,10 @@ if(isset($_POST['add_transaction'])){
                 <h5 class="card-title"><?= $title ?></h5>
                 <?php //if(isset($_GET['add-user-role'])):?>
                     <div align="right" class="mb-3">
-                        <button class="btn btn-primary" name="add_transaction">Add Transaction</button>
+                        <form action="" method="post">
+                            <button class="btn btn-primary" name="add_transaction">Add Transaction</button>
+
+                        </form>
                     </div>
                     <table class="table table-bordered">
                         <thead>
@@ -45,7 +54,7 @@ if(isset($_POST['add_transaction'])){
                                 <td><?= "Rp " . $data['sub_total']?></td>
                                 <td>
                                     <a href="?page=tambah-pos&print=<?= $data['id'] ?>" class="btn btn-primary btn-sm">Print</a>
-                                    <a href="?page=tambah-pos&delete=<?= $data['id'] ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="?page=pos&delete=<?= $data['id'] ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
                             <?php endforeach ?>
