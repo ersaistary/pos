@@ -53,7 +53,7 @@ if(isset($_GET['delete'])){
                                 <td><?= $data['name']?></td>
                                 <td><?= "Rp " . $data['sub_total']?></td>
                                 <td>
-                                    <a href="?page=tambah-pos&print=<?= $data['id'] ?>" class="btn btn-primary btn-sm">Print</a>
+                                    <a href="?page=print-pos&print=<?= $data['id'] ?>" class="btn btn-primary btn-sm">Print</a>
                                     <a href="?page=pos&delete=<?= $data['id'] ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
