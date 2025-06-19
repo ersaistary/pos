@@ -3,6 +3,10 @@ $query= mysqli_query($config, "SELECT transactions.*, users.name FROM transactio
 LEFT JOIN users ON transactions.id_user = users.id
 ORDER BY transactions.id DESC");
 $rowQuery = mysqli_fetch_all($query, MYSQLI_ASSOC);
+
+if(isset($_POST['add_transaction'])){
+    header("location:?page=tambah-pos");
+}
 ?>
 
 <div class="row">
@@ -20,7 +24,7 @@ $rowQuery = mysqli_fetch_all($query, MYSQLI_ASSOC);
                 <h5 class="card-title"><?= $title ?></h5>
                 <?php //if(isset($_GET['add-user-role'])):?>
                     <div align="right" class="mb-3">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Transaction</button>
+                        <button class="btn btn-primary" name="add_transaction">Add Transaction</button>
                     </div>
                     <table class="table table-bordered">
                         <thead>

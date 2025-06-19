@@ -61,6 +61,33 @@ $id_trans++;
 $increment_number = sprintf("%03d", $id_trans);
 // $no_transaction= "TR" . "-" . date("dmy") . "-"  . str_pad("0", $id_trans, STR_PAD_LEFT);
 $no_transaction= "TR" . "-" . date("dmy") . "-"  . $increment_number;
+
+
+if(isset($_POST['save'])){
+    $id_product = $_POST['id_product'];
+    $id_user = $_POST['id_user'];
+    $grand_total = $_POST['grand_total'];
+
+    // Insert into transactions
+    $insertTransaction = mysqli_query($config, "INSERT INTO transactions (no_transaction, id_user, sub_total) VALUES ('$no_transaction', '$id_user', '$grand_total')");
+
+    if($insertTransaction){
+        $last_id = mysqli_insert_id($config);
+        $id_products = $_POST['id_product'];
+        $qtys = $_POST['qty'];
+        $totals = $_POST['total'];
+        foreach ($_POST['id_product'] as $key => $value) {
+            $id_product = $value;
+            $qty = $qtys[$key];
+            $total = $totals[$key];
+            // Insert into transaction_details
+            mysqli_query($config, "INSERT INTO transactions_details (id_transactions, id_product, qty, total) VALUES ('$last_id', '$id_product', '$qty', '$total')");
+        }
+        header("location:?page=pos&success=berhasil");
+    } else {
+        header("location:?page=pos&error=gagal");
+    }
+}
 ?>
 
 <div class="row">
@@ -101,6 +128,7 @@ $no_transaction= "TR" . "-" . date("dmy") . "-"  . $increment_number;
                             <?php endforeach ?>
                         </tbody>
                     </table>
+                    
                 <!-- kalau gaada add user role -->
                 <?php else: ?>
                 <form action="" method="post">
@@ -115,7 +143,7 @@ $no_transaction= "TR" . "-" . date("dmy") . "-"  . $increment_number;
                                 <select name="id_product" id="id_product" class="form-control">
                                     <option value="">Select One</option>
                                     <?php foreach ($rowProducts as $key => $data):?>
-                                        <option value="<?php echo $data['id'] ?>"><?php echo $data['name'] ?></option>
+                                        <option data-price="<?php echo $data['price'] ?>" value="<?php echo $data['id'] ?>"><?php echo $data['name'] ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -143,6 +171,14 @@ $no_transaction= "TR" . "-" . date("dmy") . "-"  . $increment_number;
                                 </tr>
                             </thead>
                             <tbody></tbody>
+                        </table>
+                        <br>
+                        <p>
+                            <strong>Grand Total : Rp <span id="grandTotal">0</span></strong>
+                            <div class="mb-3">
+                                <input type="hidden" name="grand_total" id="grandTotalInput" value=0>
+                            </div>
+                        </p>
                     </div>
 
 
@@ -192,20 +228,39 @@ $no_transaction= "TR" . "-" . date("dmy") . "-"  . $increment_number;
 <script>
     const button = document.querySelector('.addRow'); 
     const tbody = document.querySelector('#myTable tbody'); // untuk mengambil tbody dari table dengan id myTable
+    const select = document.querySelector('#id_product'); // untuk mengambil select id_product
+    const grandTotal = document.getElementById('grandTotal'); // untuk mengambil input grand total
+    const grandTotalInput = document.getElementById('grandTotalInput'); // untuk mengambil input grand total
+
     let no = 1; // untuk nomor urut
     button.addEventListener('click', function() {
         // alert ('Tombol Add Row Diklik');
+        const selectedProduct = select.options[select.selectedIndex]; // mengambil opsi yang dipilih
+        
+        const productValue = selectedProduct.value; // id produk yang dipilih
+        if (!productValue) {
+            alert("Please select a product first!"); // jika tidak ada produk yang dipilih
+            return; // keluar dari fungsi
+        }
+        const productName = selectedProduct.textContent; // nama produk yang dipilih
+        const productPrice = selectedProduct.dataset.price; // harga produk yang dipilih
         const tr = document.createElement('tr'); // membuat elemen tr baru
         tr.innerHTML = 
         `<td>${no}</td>
-        <td> <input type='hidden' name='id_product[]'></td>
-        <td> <input type='number' name='qty[]' value='0' class='form-control'></td>
-        <td> <input type='hidden' name='total[]'></td>
+        <td> <input type='hidden' name='id_product[]' class='id_products' value='${productValue}'>${productName}</td>
+        <td> 
+            <input type='number' name='qty[]' value='1' class='form-control qtys'>
+            <input type='hidden' class="priceInput" name='price[]' value='${productPrice}'>
+        </td>
+        <td> <input type='hidden' name='total[]' class='totals' value='${productPrice}'><span class='totalText'>${productPrice}</span></td>
         <td>
             <button type='button' class='btn btn-danger removeRow' type='button'>Delete</button>
         </td>`;
         tbody.appendChild(tr); // menambahkan elemen tr ke tbody
         no++; // menambah nomor urut
+        
+        select.value = ""; // mengosongkan pilihan select setelah menambahkan baris baru
+        updateGrandTotal(); // update grand total
     });
 
     tbody.addEventListener('click', function(e) {
@@ -213,6 +268,7 @@ $no_transaction= "TR" . "-" . date("dmy") . "-"  . $increment_number;
             e.target.closest('tr').remove(); // menghapus baris yang diklik
         }
         updateRowNumbers(); // update nomor urut
+        updateGrandTotal(); // update grand total
     });
 
     function updateRowNumbers() {
@@ -224,4 +280,27 @@ $no_transaction= "TR" . "-" . date("dmy") . "-"  . $increment_number;
 
         no= rows.length + 1; // update nomor urut untuk baris berikutnya
     }
+    
+    function updateGrandTotal() {
+        const totalCells = tbody.querySelectorAll('.totals'); // mengambil semua input total
+        let grand = 0; // inisialisasi grand total
+
+        totalCells.forEach(function(input) {
+            grand += parseInt(input.value) || 0; // menambahkan nilai total ke grand total
+        });
+
+        grandTotal.textContent = grand.toLocaleString('id-ID'); // update teks grand total
+        grandTotalInput.value = grand; // update nilai input hidden grand total
+    }
+
+    tbody.addEventListener('input', function(e) {
+        if (e.target.classList.contains('qtys')) {
+            const row = e.target.closest('tr'); // mengambil baris terdekat
+            const qty = parseInt(e.target.value) || 0; // mengambil nilai qty
+            const price = parseInt(row.querySelector('.priceInput').value) || 0; // mengambil harga produk
+            row.querySelector('.totalText').textContent = qty * price; // print total di elemen span
+            row.querySelector('.totals').value = qty * price; // update nilai total di input hidden
+            updateGrandTotal(); // update grand total
+        }
+    });
 </script>
